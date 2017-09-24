@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="main.css">
+<body>
+	<script src="https://unpkg.com/vue"></script>
+	<h1>MATH GAME</h1>
+
+	<div id="app">
+
+	 <!--Perhaps use different method for requiring user keypad-->
+	 <!-- eventually make button content {{ button }}-->
+
+	 <img v-if="gameState == 'correct-answer'" v-for="boy in boys" :src="boy">
+
+	 <p v-if="gameState == 'started'">Add these numbers together as fast as you can...</p>
+	 <p v-if="gameState == 'not-started'">Let's practice adding. Click "start" to begin.</p>
+	 <p v-if="gameState == 'correct-answer'">That's correct! Try again?</p>
+
+	 <button v-if="gameState != 'started'" v-on:click="startGame">Start</button>
+
+	 <p><span v-if="gameState == 'started'" v-for="number in question"> {{ number }}, </span></p>
+
+	 <input v-if="gameState == 'started'" type="number" pattern="[0-9]*" inputmode="numeric" ref="answer" v-model="userAnswer" placeholder="?">
+
+<!-- CLOCK -->
+
+	 <div id="clock" v-if="gameState != 'not-started'">
+	 	<p>time: {{ clock }}s</p>
+	 </div>
+
+<!--
+	 <p>My game state is: {{ gameState }}</p>
+	 <p>The correct answer is: {{ correctAnswer }}</p>
+
+	-->
+
+	</div>
+
+	 <script>
+	 	// wishlist:
+	 	// add the clock timer that starts on start game and stops on correct answer
+
+
+	 	'use strict'
+    new Vue({
+        el: "#app",
+        data: {
+        	// possible states: 'not-started', 'started','correct-answer'
+            gameState: 'not-started',
+            userAnswer: null,
+            correctAnswer: null,
+            // an array of integers that i will randomly generate
+            question: null,
+            clock: null,
+            interval: null,
+            boys: null
+        },
+        methods: {
+        	// starts the game
+        	startGame: function () {
+
+        		const length = 5
+        		const max = 12
+        		this.boys = ['http://pm1.narvii.com/6461/f73de4a0b0d5f7a899748bdc7a0f4c0b43ca978e_hq.jpg',
+        		'https://i.pinimg.com/736x/b1/89/1b/b1891bda613d8ff1e62cca99357304a6--jung-kook-bts-lavender.jpg',
+        		'https://www.thefamouspeople.com/profiles/images/og-kim-taehyung-32621.jpg',
+        		'https://i2.wp.com/www.hellokpop.com/wp-content/uploads/2016/08/CqDwXjCVYAE8X9d.jpg?resize=660%2C400',
+        		'https://i.pinimg.com/originals/6b/31/f9/6b31f9e8b95dcd1e5cce5d21a1b3d751.jpg',
+        		'http://data.whicdn.com/images/283307936/superthumb.jpg',
+        		'https://www.digitalmusicnews.com/wp-content/uploads/2017/06/rap_monster.jpg']
+        		this.userAnswer = null
+        		this.gameState = 'started'
+        		this.question = new Array(length).fill().map(() => Math.floor(Math.random() * max) + 1)
+        		this.correctAnswer = this.question.reduce((a, b) => a + b, 0)
+        		this.$nextTick(() => this.$refs.answer.focus()) // gives focus to the answer field, study more
+       			this.clock = 0
+       			this.interval = setInterval(() => this.clock++, 1000) // may want to stop setting this interval.
+        	}
+        	}, 	
+    	watch: {
+            // checks the answer
+        	// if answer is correct, shstops the game, otherwise
+        	userAnswer: function (val) {
+        		if (val == this.correctAnswer) {
+        			const difficulty = 5
+        			this.gameState = 'correct-answer'
+        			this.boys = this.boys.slice(0, Math.floor(6 - (this.clock/difficulty)) + 1); // the faster you are, the more boys
+        			clearInterval(this.interval)
+        		}
+        	}
+
+    	} 
+    });
+	</script>
+	</body>
+</html>
+
