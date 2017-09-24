@@ -20,6 +20,8 @@
 
 	 <script>
 
+// basic variables for determining the difficulty of the adding game
+
         const howManyNumbers = 5
         const largestNumber = 12
         const difficulty = 1
@@ -28,12 +30,10 @@
     new Vue({
         el: "#app",
         data: {
-        	// possible states: 'not-started', 'started','correct-answer'
-            gameState: 'not-started',
+            gameState: 'not-started',   // possible states: 'not-started', 'started','correct-answer'
             userAnswer: null,
             correctAnswer: null,
-            // an array of integers that i will randomly generate
-            question: null,
+            question: null,     // an array of integers that i will randomly generate
             clock: null,
             interval: null,
             boys: null
@@ -68,7 +68,7 @@
         		}
         	}
 
-    	} 
+    	}
     });
 	</script>
 	</body>
