@@ -19,6 +19,11 @@
 	</div>
 
 	 <script>
+
+        const howManyNumbers = 5
+        const largestNumber = 12
+        const difficulty = 1
+
 	'use strict'
     new Vue({
         el: "#app",
@@ -36,9 +41,6 @@
         methods: {
         	// starts the game
         	startGame: function () {
-
-        		const length = 5
-        		const max = 12
         		this.boys = ['http://pm1.narvii.com/6461/f73de4a0b0d5f7a899748bdc7a0f4c0b43ca978e_hq.jpg',
         		'https://i.pinimg.com/736x/b1/89/1b/b1891bda613d8ff1e62cca99357304a6--jung-kook-bts-lavender.jpg',
         		'https://www.thefamouspeople.com/profiles/images/og-kim-taehyung-32621.jpg',
@@ -48,11 +50,11 @@
         		'https://www.digitalmusicnews.com/wp-content/uploads/2017/06/rap_monster.jpg']
         		this.userAnswer = null
         		this.gameState = 'started'
-        		this.question = new Array(length).fill().map(() => Math.floor(Math.random() * max) + 1)
+        		this.question = new Array(howManyNumbers).fill().map(() => Math.floor(Math.random() * largestNumber) + 1)
         		this.correctAnswer = this.question.reduce((a, b) => a + b, 0)
-        		this.$nextTick(() => this.$refs.answer.focus()) // gives focus to the answer field, study more
+        		this.$nextTick(() => this.$refs.answer.focus()) // gives focus to the answer field. fuzzy on how it works
        			this.clock = 0
-       			this.interval = setInterval(() => this.clock++, 1000) // may want to stop setting this interval.
+       			this.interval = setInterval(() => this.clock++, 1000)
         	}
         	}, 	
     	watch: {
@@ -60,7 +62,6 @@
         	// if answer is correct, shstops the game, otherwise
         	userAnswer: function (val) {
         		if (val == this.correctAnswer) {
-        			const difficulty = 1 // the bigger the easier
         			this.gameState = 'correct-answer'
         			this.boys = this.boys.slice(0, 7 - Math.floor(this.clock/difficulty)); // the faster you are, the more boys
         			clearInterval(this.interval)
