@@ -6,42 +6,20 @@
 	<h1>MATH GAME</h1>
 
 	<div id="app">
-
-	 <!--Perhaps use different method for requiring user keypad-->
-	 <!-- eventually make button content {{ button }}-->
-
 	 <img v-if="gameState == 'correct-answer'" v-for="boy in boys" :src="boy">
-
 	 <p v-if="gameState == 'started'">Add these numbers together as fast as you can...</p>
 	 <p v-if="gameState == 'not-started'">Let's practice adding. Click "start" to begin.</p>
 	 <p v-if="gameState == 'correct-answer'">That's correct! Try again?</p>
-
 	 <button v-if="gameState != 'started'" v-on:click="startGame">Start</button>
-
 	 <p><span v-if="gameState == 'started'" v-for="number in question"> {{ number }}, </span></p>
-
 	 <input v-if="gameState == 'started'" type="number" pattern="[0-9]*" inputmode="numeric" ref="answer" v-model="userAnswer" placeholder="?">
-
-<!-- CLOCK -->
-
 	 <div id="clock" v-if="gameState != 'not-started'">
 	 	<p>time: {{ clock }}s</p>
 	 </div>
-
-<!--
-	 <p>My game state is: {{ gameState }}</p>
-	 <p>The correct answer is: {{ correctAnswer }}</p>
-
-	-->
-
 	</div>
 
 	 <script>
-	 	// wishlist:
-	 	// add the clock timer that starts on start game and stops on correct answer
-
-
-	 	'use strict'
+	'use strict'
     new Vue({
         el: "#app",
         data: {
