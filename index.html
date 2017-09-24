@@ -7,7 +7,7 @@
 
 	<div id="app">
 	 <img v-if="gameState == 'correct-answer'" v-for="boy in boys" :src="boy">
-	 <p v-if="gameState == 'started'">Add these numbers together as fast as you can...</p>
+	 <p v-if="gameState == 'started'">Add these numbers together...</p>
 	 <p v-if="gameState == 'not-started'">Let's practice adding. Click "start" to begin.</p>
 	 <p v-if="gameState == 'correct-answer'">That's correct! Try again?</p>
 	 <button v-if="gameState != 'started'" v-on:click="startGame">Start</button>
@@ -24,7 +24,7 @@
 
         const howManyNumbers = 5
         const largestNumber = 12
-        const difficulty = 1
+        const difficulty = 3
 
 	'use strict'
     new Vue({
