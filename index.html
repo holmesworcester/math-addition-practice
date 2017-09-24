@@ -82,7 +82,7 @@
         	// if answer is correct, shstops the game, otherwise
         	userAnswer: function (val) {
         		if (val == this.correctAnswer) {
-        			const difficulty = 5
+        			const difficulty = 3 // the bigger the easier
         			this.gameState = 'correct-answer'
         			this.boys = this.boys.slice(0, Math.floor(6 - (this.clock/difficulty)) + 1); // the faster you are, the more boys
         			clearInterval(this.interval)
