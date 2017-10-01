@@ -25,7 +25,7 @@
 
         const howManyNumbers = 5
         const largestNumber = 12
-        const difficulty = 3
+        const difficulty = 3 // determines how fast you must be to get reward.
 
 	'use strict'
     new Vue({
@@ -51,7 +51,7 @@
         		'https://www.digitalmusicnews.com/wp-content/uploads/2017/06/rap_monster.jpg']
         		this.userAnswer = null
         		this.gameState = 'started'
-        		this.question = new Array(howManyNumbers).fill().map(() => Math.floor(Math.random() * largestNumber) + 1)
+        		this.question = new Array(howManyNumbers).fill().map(() => Math.floor((Math.random() - 0.5) * (largestNumber + 1) * 2))
         		this.correctAnswer = this.question.reduce((a, b) => a + b, 0)
         		this.$nextTick(() => this.$refs.answer.focus()) // gives focus to the answer field. fuzzy on how it works
        			this.clock = 0
