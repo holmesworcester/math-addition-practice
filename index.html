@@ -9,8 +9,7 @@
 	 <img v-if="gameState == 'correct-answer'" v-for="boy in boys" :src="boy">
 	 <p v-if="gameState == 'started'">Add these numbers together...</p>
 	 <p v-if="gameState == 'not-started'">Let's practice adding. Click "start" to begin.</p>
-     <p v-if="gameState == 'correct-answer'">**{{ userAnswer }}**</p>
-	 <p v-if="gameState == 'correct-answer'">That's correct! Try again?</p>
+	 <p v-if="gameState == 'correct-answer'"><strong>{{ userAnswer }}</strong> is correct! <span v-if="boys.length > 0">You win <strong>{{ boys.length }}</strong> BTS boys.</span> Try again?</p>
 	 <button v-if="gameState != 'started'" v-on:click="startGame">Start</button>
 	 <p><span v-if="gameState == 'started'" v-for="number in question"> {{ number }}, </span></p>
 	 <input v-if="gameState == 'started'" type="number" pattern="[0-9]*" inputmode="numeric" ref="answer" v-model="userAnswer" placeholder="?">
