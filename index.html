@@ -12,7 +12,7 @@
 	 <p v-if="gameState == 'correct-answer'"><strong>{{ userAnswer }}</strong> is correct! <span v-if="boys.length > 0">You win <strong>{{ boys.length }}</strong> BTS boys.</span> Try again?</p>
 	 <button v-if="gameState != 'started'" v-on:click="startGame">Start</button>
 	 <p><span v-if="gameState == 'started'" v-for="number in question"> {{ number }}, </span></p>
-	 <input v-if="gameState == 'started'" type="number" pattern="[0-9]*" inputmode="numeric" ref="answer" v-model="userAnswer" placeholder="?">
+	 <input v-if="gameState == 'started'" v-bind:class = "{ wrong: wrongAnswer }" type="number" pattern="[0-9]*" inputmode="numeric" ref="answer" v-model="userAnswer" placeholder="?">
 	 <div id="clock" v-if="gameState != 'not-started'">
 	 	<p>time: {{ clock }}s</p>
 	 </div>
@@ -36,7 +36,8 @@
             question: null,     // an array of integers that i will randomly generate
             clock: null,
             interval: null,
-            boys: null
+            boys: null,
+            wrongAnswer: null
         },
         methods: {
         	// starts the game
@@ -59,13 +60,17 @@
         	}, 	
     	watch: {
             // checks the answer
-        	// if answer is correct, shstops the game, otherwise
+        	// if answer is correct, stops the game, otherwise
         	userAnswer: function (val) {
         		if (val == this.correctAnswer) {
         			this.gameState = 'correct-answer'
         			this.boys = this.boys.slice(0, 7 - Math.floor(this.clock/difficulty)); // the faster you are, the more boys
         			clearInterval(this.interval)
-        		}
+        		} else if (val) {
+                    this.wrongAnswer = true
+                } else {
+                    this.wrongAnswer = false
+                }
         	}
 
     	}
